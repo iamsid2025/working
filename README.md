@@ -176,7 +176,8 @@ Next.js can be deployed to:
 - **Netlify**: Connect your Git repository and deploy
 - **AWS Amplify**: Use the Amplify Console
 - **Docker**: Create a Dockerfile and deploy to any container platform
-- **Static Export**: For static sites, add `output: 'export'` to `next.config.js` (limited features)
+- **Static Export**: For static sites, add `output: 'export'` to `next.config.js`
+  - Note: Static export doesn't support SSR, ISR, API routes, or dynamic image optimization
 
 ### Docker Deployment
 
@@ -308,9 +309,13 @@ export default function RootLayout({ children }) {
 npm run dev -- -p 3001
 
 # Or kill the process gracefully (Unix/Linux/Mac)
-# Try graceful termination first (wait 5-10 seconds before force kill)
+# First, try graceful termination
 lsof -ti:3000 | xargs kill -TERM 2>/dev/null
-# If process is still running after waiting, force kill
+
+# Wait 5-10 seconds, then check if process is still running
+lsof -ti:3000
+
+# If process is still running, force kill
 lsof -ti:3000 | xargs kill -9 2>/dev/null
 
 # Or kill the process (Windows)
