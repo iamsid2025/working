@@ -307,7 +307,9 @@ export default function RootLayout({ children }) {
 # Use a different port
 npm run dev -- -p 3001
 
-# Or kill the process (Unix/Linux/Mac)
+# Or kill the process gracefully (Unix/Linux/Mac)
+lsof -ti:3000 | xargs kill
+# If that doesn't work, force kill
 lsof -ti:3000 | xargs kill -9
 
 # Or kill the process (Windows)
@@ -320,7 +322,11 @@ npx kill-port 3000
 
 **Module not found:**
 ```bash
-# Clear cache and reinstall
+# Try reinstalling with existing lock file (recommended)
+rm -rf node_modules
+npm ci
+
+# Or clear cache and reinstall (last resort - may cause version inconsistencies)
 rm -rf node_modules package-lock.json
 npm install
 ```
