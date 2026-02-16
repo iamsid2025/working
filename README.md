@@ -176,7 +176,7 @@ Next.js can be deployed to:
 - **Netlify**: Connect your Git repository and deploy
 - **AWS Amplify**: Use the Amplify Console
 - **Docker**: Create a Dockerfile and deploy to any container platform
-- **Static Export**: For static sites, use `next export` (limited features)
+- **Static Export**: For static sites, add `output: 'export'` to `next.config.js` (limited features)
 
 ### Docker Deployment
 
@@ -304,10 +304,18 @@ export default function RootLayout({ children }) {
 
 **Port already in use:**
 ```bash
-# Kill the process on port 3000
-lsof -ti:3000 | xargs kill -9
-# Or use a different port
+# Use a different port
 npm run dev -- -p 3001
+
+# Or kill the process (Unix/Linux/Mac)
+lsof -ti:3000 | xargs kill -9
+
+# Or kill the process (Windows)
+# Find the process: netstat -ano | findstr :3000
+# Kill it: taskkill /PID <PID> /F
+
+# Or use cross-platform solution
+npx kill-port 3000
 ```
 
 **Module not found:**
