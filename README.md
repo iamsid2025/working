@@ -308,10 +308,10 @@ export default function RootLayout({ children }) {
 npm run dev -- -p 3001
 
 # Or kill the process gracefully (Unix/Linux/Mac)
-# Try graceful termination first
-lsof -ti:3000 | xargs -r kill -TERM
-# If that doesn't work after a few seconds, force kill
-lsof -ti:3000 | xargs -r kill -9
+# Try graceful termination first (wait 5-10 seconds before force kill)
+lsof -ti:3000 | xargs kill -TERM 2>/dev/null
+# If process is still running after waiting, force kill
+lsof -ti:3000 | xargs kill -9 2>/dev/null
 
 # Or kill the process (Windows)
 # Find the process: netstat -ano | findstr :3000
